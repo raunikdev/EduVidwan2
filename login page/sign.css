@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: grid;
+    height: 100%;
+    width: 100%;
+    place-items: center;
+    background: #f2f2f2;
+    min-height: 100vh;
+    transition: background-color 0.3s;
+    background-image: url('background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+body.dark-mode {
+    background: #1a1a1a;
+    color: white;
+}
+
+body.dark-mode .wrapper {
+    background: #333;
+    box-shadow: 0px 15px 20px rgba(0,0,0,0.3);
+}
+
+body.dark-mode .field input {
+    background: #444;
+    color: white;
+    border-color: #555;
+}
+
+body.dark-mode .field label {
+    color: #aaa;
+    background: #333;
+}
+
+body.dark-mode .field input:focus ~ label,
+body.dark-mode .field input:valid ~ label {
+    background: #333;
+    color: #4158d0;
+}
+
+.wrapper {
+    width: 380px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0px 15px 20px rgba(0,0,0,0.1);
+    margin: 20px;
+}
+
+.wrapper .title {
+    font-size: 35px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 100px;
+    color: #fff;
+    user-select: none;
+    border-radius: 15px 15px 0 0;
+    background: linear-gradient(-135deg, #c850c0, #4158d0);
+}
+
+.wrapper form {
+    padding: 10px 30px 50px 30px;
+}
+
+.wrapper form .field {
+    height: 50px;
+    width: 100%;
+    margin-top: 20px;
+    position: relative;
+}
+
+.wrapper form .field input {
+    height: 100%;
+    width: 100%;
+    outline: none;
+    font-size: 17px;
+    padding-left: 20px;
+    border: 1px solid lightgrey;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.wrapper form .field input:focus,
+form .field input:valid {
+    border-color: #4158d0;
+}
+
+.wrapper form .field label {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    color: #999999;
+    font-weight: 400;
+    font-size: 17px;
+    pointer-events: none;
+    transform: translateY(-50%);
+    transition: all 0.3s ease;
+    padding: 0 5px;
+}
+
+form .field input:focus ~ label,
+form .field input:valid ~ label {
+    top: 0%;
+    font-size: 16px;
+    color: #4158d0;
+    background: #fff;
+    transform: translateY(-50%);
+}
+
+form .field input[type="submit"] {
+    color: #fff;
+    border: none;
+    padding-left: 0;
+    margin-top: -10px;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    background: linear-gradient(-135deg, #c850c0, #4158d0);
+    transition: all 0.3s ease;
+}
+
+form .field input[type="submit"]:active {
+    transform: scale(0.95);
+}
+
+form .signin-link {
+    color: #262626;
+    margin-top: 20px;
+    text-align: center;
+}
+
+form .signin-link a {
+    color: #4158d0;
+    text-decoration: none;
+}
+
+form .signin-link a:hover {
+    text-decoration: underline;
+}
+
+.home-button {
+    margin-top: 20px;
+    margin-left: 20px;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+  }
+  
+.home-icon {
+    width: 45px;
+    height: 45px;
+  }
+
+@media (max-width: 420px) {
+    .wrapper {
+        width: 90%;
+    }
+    
+    .wrapper .title {
+        font-size: 30px;
+    }
+}

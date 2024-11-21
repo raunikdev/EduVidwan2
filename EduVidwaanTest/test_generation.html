@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 60%;
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .prev-btn, .next-btn {
+            width: 50px;
+            height: 50px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .prev-btn:hover, .next-btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.1);
+        }
+        .score {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .hidden {
+            display: none;
+        }
+        .exit-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            transition: all 0.3s ease;
+        }
+        .exit-btn:hover {
+            background-color: #a71d2a;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="question-container">
+        <div class="question"></div>
+        <div class="options"></div>
+    </div>
+    <div class="nav-buttons">
+        <button class="prev-btn" onclick="navigate(-1)" disabled>&#8592;</button>
+        <button class="next-btn" onclick="navigate(1)">&#8594;</button>
+    </div>
+    <div class="score hidden">
+        Your Score: <span id="score"></span>
+        <button class="exit-btn" onclick="exitQuiz()">Exit</button>
+    </div>
+</div>
+
+<script>
+    let questions = [];
+    let randomQuestions = [];
+    let currentQuestionIndex = 0;
+    let userAnswers = [];
+    let score = 0;
+
+    // Function to fetch questions from the API
+    async function fetchQuestions(difficulty) {
+        try {
+            const response = await fetch(`http://127.0.0.1:5000/api/getQuestions?difficulty=${difficulty}`);
+            const data = await response.json();
+            if (data.questions && data.questions.length > 10) {
+                questions = data.questions;
+                randomQuestions = questions.sort(() => 0.5 - Math.random()).slice(0, 10);
+                showQuestion();
+            } else {
+                alert('Not enough questions available!');
+            }
+        } catch (error) {
+            console.error('Error fetching questions:', error);
+            alert('Failed to load questions.');
+        }
+    }
+
+    // Function to show the current question
+    function showQuestion() {
+        if (currentQuestionIndex < 0 || currentQuestionIndex >= randomQuestions.length) return;
+
+        const question = randomQuestions[currentQuestionIndex];
+        const questionElement = document.querySelector('.question');
+        const optionsElement = document.querySelector('.options');
+
+        questionElement.textContent = `${currentQuestionIndex + 1}. ${question.question}`;
+        optionsElement.innerHTML = '';
+
+        question.options.forEach((option, index) => {
+            const button = document.createElement('button');
+            button.textContent = option;
+            button.onclick = () => selectOption(index);
+            optionsElement.appendChild(button);
+        });
+
+        document.querySelector('.prev-btn').disabled = currentQuestionIndex === 0;
+        document.querySelector('.next-btn').disabled = currentQuestionIndex === randomQuestions.length - 1;
+    }
+
+    // Function to navigate to the next/previous question
+    function navigate(direction) {
+        if (currentQuestionIndex + direction >= 0 && currentQuestionIndex + direction < randomQuestions.length) {
+            currentQuestionIndex += direction;
+            showQuestion();
+        }
+    }
+
+    // Function to handle option selection
+    function selectOption(index) {
+        const correctAnswer = randomQuestions[currentQuestionIndex].answer;
+        const selectedOption = randomQuestions[currentQuestionIndex].options[index];
+
+        userAnswers[currentQuestionIndex] = selectedOption === correctAnswer;
+
+        if (currentQuestionIndex < randomQuestions.length - 1) {
+            currentQuestionIndex++;
+            showQuestion();
+        } else {
+            showScore();
+        }
+    }
+
+    // Function to calculate and display the score
+    function showScore() {
+        score = userAnswers.filter(answer => answer === true).length;
+        document.querySelector('.question-container').classList.add('hidden');
+        document.querySelector('.nav-buttons').classList.add('hidden');
+        document.querySelector('.score').classList.remove('hidden');
+        document.getElementById('score').textContent = `${score} / ${randomQuestions.length}`;
+    }
+
+    // Exit function
+    function exitQuiz() {
+        window.history.back();
+    }
+
+    // Initialize the quiz by fetching questions
+    fetchQuestions('easy');  // Change to 'medium' or 'hard' as needed
+</script>
+
+</body>
+</html>

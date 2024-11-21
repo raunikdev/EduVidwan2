@@ -1,0 +1,128 @@
+html,body{
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.test-img{
+  width: 100%;
+  border-radius: 20px;
+  height: 262.5;
+  object-fit: contain;
+}
+.test-div-1,
+.test-div-2{
+  height: 585px;
+  width: 350px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: grey;
+  border-radius: 20px;
+  /*  */
+}
+.test-div-1{
+  margin-left: auto;
+}
+.test-div-2{
+  margin-right: auto;
+}
+.test{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  /* margin-left: auto; */
+  width: 100%;
+}
+.star{
+  font-size: 25px;
+  margin-left: 0px;
+  color: grey;
+}
+.text-test-template{
+  font-size: 22px;
+  margin: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.button-test-template{
+  margin-top: 3px;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 155px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 1.1em;
+}
+.p{
+  margin: 0px;
+}
+.buttons-custom{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.customize-your-test-line{
+  padding-left: 5px;
+  font-size: 30px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-weight: bold;
+}
+button:hover{
+  background-color: #005fc5;
+}
+button:active{
+  opacity: 0.8;
+}
+.button-test-1-level,
+.button-test-2-level{
+  margin-top: 39.5px;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 155px;
+  color: white;
+  border: none;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 1.1em;
+}
+.button-test-2-level{
+  background-color: #007BFF;
+}
+.button-test-1-level{
+  background-color: rgba(255, 255, 255, 0);
+  border-width: 2px;
+  border-style: solid;
+  border-color: #005fc5;
+  color: #005fc5;
+  padding-top: 11px;
+  padding-bottom: 11px;
+  transition: background-color 0.2s,
+  color 0.2s, ;
+}
+.button-test-1-level:hover{
+  background-color: #007BFF;
+  color: white;
+  border:none;
+}
+@media (max-width: 770px){
+  .test{
+    grid-template-columns: 1fr;
+  }
+  #test-series{
+    height: 200vh;
+  }
+  .test-div-1{
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .test-div-2{
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
